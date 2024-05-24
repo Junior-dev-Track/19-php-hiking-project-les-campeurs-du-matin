@@ -1,11 +1,11 @@
 <h2>List of products</h2>
 
-<?php if (!empty($products)): ?>
+<?php if (!empty($hikes)): ?>
     <ul>
-        <?php foreach($products as $product): ?>
+        <?php foreach($hikes as $hike): ?>
             <li>
-                <a href="product?productCode=<?= $product['productCode'] ?>">
-                    <?= $product['productName'] ?>
+                <a href="hike?id=<?= $hike['id'] ?>">
+                    <?= $hike['name'] ?>
                 </a>
             </li>
         <?php endforeach; ?>

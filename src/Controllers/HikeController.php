@@ -4,14 +4,14 @@ declare(strict_types=1);
 namespace Controllers;
 
 use Exception;
-use Models\Product;
+use Models\Hike;
 
-class ProductController
+class HikeController
 {
     public  function index()
     {
       try {
-        $products = (new Product())->findAll(20);
+        $hikes = (new Hike())->findAll(20);
 
         include __DIR__ . '/../views/includes/header.view.php';
         include __DIR__ . '/../views/index.view.php';
@@ -22,13 +22,13 @@ class ProductController
       }
     }
 
-    public function show(string $productCode)
+    public function show(string $id)
     {
       try {
-        $product = (new Product())->find($productCode);
+        $hike = (new Hike())->find($id);
 
-        if(empty($product)){
-          throw new Exception('Product not found');
+        if(empty($hike)){
+          throw new Exception('Hike not found');
         }
 
         include __DIR__ . '/../views/includes/header.view.php';

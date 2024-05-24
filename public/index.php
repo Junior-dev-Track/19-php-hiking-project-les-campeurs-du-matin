@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Controllers\AuthController;
-use Controllers\ProductController;
+use Controllers\HikeController;
 
 Use Models\Database;
 
@@ -25,6 +25,52 @@ $router -> map('GET', '/', function() {
 $router -> map('GET', '/home', function() {
     require __DIR__ . "/../src/views/index.view.php";
 });
+
+$router -> map('GET', '/hike', function() {
+    $hikeController = new HikeController();
+    $hikeController->index();
+});
+
+$router -> map('GET', '/hike/[i:id]', function($id) {
+    $hikeController = new HikeController();
+    $hikeController->show($id);
+});
+
+$router -> map('GET', '/login', function() {
+    $authController = new AuthController();
+    $authController->showLoginForm();
+});
+
+$router -> map('POST', '/login', function() {
+    $authController = new AuthController();
+    $authController->login($_POST['login'], $_POST['pass']);
+});
+
+$router -> map('GET', '/logout', function() {
+    $authController = new AuthController();
+    $authController->logout();
+});
+
+$router -> map('GET', '/register', function() {
+    $authController = new AuthController();
+    $authController->showSubscriptionForm();
+});
+
+$router -> map('POST', '/register', function() {
+    $authController = new AuthController();
+    $authController->subscribe($_POST['login'], $_POST['email'], $_POST['pass']);
+});
+
+$router -> map('GET', '/404', function() {
+    require __DIR__ . "/../src/views/404.view.php";
+});
+
+$router -> map('GET', '/500', function() {
+    require __DIR__ . "/../src/views/500.view.php";
+});
+
+
+
 
 // match current request
 $match = $router->match();
@@ -45,7 +91,7 @@ if ($match && is_callable($match['target'])) {
 
 
 
-/*
+<!--
 try {
     $url_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/");
     $method = $_SERVER['REQUEST_METHOD']; // GET -- POST
@@ -89,4 +135,4 @@ catch (Exception $e) {
     $pageController = new PageController();
     $pageController->page_500($e->getMessage());
 }
-*/
+-->
