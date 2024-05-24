@@ -1,3 +1,4 @@
+<style>
 
 :root {
 	--nc-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -37,7 +38,9 @@
 		--nc-bg-3: var(--nc-d-bg-3);
 		--nc-lk-1: var(--nc-d-lk-1);
 		--nc-lk-2: var(--nc-d-lk-2);
+		--nc-lk-tx: var(--nc--dlk-tx);
 		--nc-ac-1: var(--nc-d-ac-1);
+		--nc-ac-tx: var(--nc--dac-tx);
 	}
 }
 
@@ -200,7 +203,7 @@ header {
 	margin-right: calc(50% - 50vw); */
 
 	padding-left: calc(50%);
-	padding-right: calc(50%);
+	padding-right: calc(50%);*/
 }
 
 header h1,
@@ -373,6 +376,9 @@ fieldset {
 	border-radius: 4px;
 }
 
+legend {
+	padding: auto .5rem;
+}
 
 table {
 	/* border-collapse sets the table's elements to share borders, rather than floating as separate "boxes". */
@@ -504,3 +510,4 @@ nav ul li {
 nav ul li.home {
 	padding-right: 75%;
 }
+</style>

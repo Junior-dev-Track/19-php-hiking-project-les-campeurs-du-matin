@@ -1,6 +1,87 @@
 <?php
 
-class User
+namespace Models;
+
+use PDO;
+use Exception;
+
+class User extends Database
 {
+  public function addUser($loginPost, $emailPost, $passPost)
+  {
+
+    if(isset($loginPost, $emailPost, $passPost) &&
+        !empty($loginPost) && !empty($emailPost) && !empty($passPost)
+    ) {
+
+        // strip_tags for the login
+        $login = strip_tags($loginPost);
+
+        // check valid email
+        $email = filter_var($emailPost, FILTER_VALIDATE_EMAIL);
+
+        // hash the password
+        $pass = password_hash($passPost, PASSWORD_BCRYPT);
+
+        //SQL part
+        $q = $this->query(
+            "INSERT INTO users(login, email, password) 
+                    VALUES (:login, :email, :password)",
+            [":login" => $login,
+              ":email" => $email,
+              ":password" => $pass]);
+
+        if (!$q) {
+            die("form not sent to the db");
+        }
+
+        // retreive the last ID
+        $id = $this->lastInsertId();
+
+        // store data of user in $_SESSION
+        $_SESSION["user"] = [
+          "id" => $id,
+          "login" => $login,
+          "email" => $email
+        ];
+
+    } else {
+      throw new Exception("form incomplete");
+    }
+  }
+
+
+  public function loginUser($loginPost, $passPost)
+  {
+      if (isset($loginPost, $passPost) && !empty($loginPost) && !empty($passPost)) {
+
+        $login = strip_tags($loginPost);
+
+        $q = $this->query(
+          "SELECT * FROM users WHERE login = :login",
+          [":login" => $login]
+        );
+
+        // execute return a boolean
+        if(!$q) {
+          die("User or Password not valid");
+        }
+
+        $user = $q->fetch(PDO::FETCH_ASSOC);
+
+        // check the password input with the password in db
+        if($user && !password_verify($passPost, $user['password'])) {
+            die("User or Password not valid");
+        };
+
+        // store data of user in $_SESSION
+        $_SESSION['user'] = [
+         $user['id'],
+         $user['login'],
+         $user['email']
+        ];
+
+      }
+  }
 
 }

@@ -1,7 +1,13 @@
 {
-  "autoload": {
-      "psr-4": {
-          "App\\": "src/"
-      }
-  }
+    "name": "mathilde/19-php-classic_models_mvc",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Controllers\\": "src/controllers",
+            "Models\\":  "src/models"
+        }
+    },
+    "require": {
+        "altorouter/altorouter": "^2.0"
+    }
 }
