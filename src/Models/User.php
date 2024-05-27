@@ -7,34 +7,40 @@ use Exception;
 
 class User extends Database
 {
-    public function addUser($loginPost, $emailPost, $passPost)
+    public function addUser($firstnamePost, $lastnamePost, $loginPost, $emailPost, $passPost)
     {
 
-        if (isset($loginPost, $emailPost, $passPost) &&
-            !empty($loginPost) && !empty($emailPost) && !empty($passPost)
+      if(isset($firstnamePost, $lastnamePost, $loginPost, $emailPost, $passPost) &&
+        !empty($firstnamePost) && !empty($lastnamePost) && !empty($loginPost) && !empty($emailPost) && !empty($passPost)
         ) {
 
             // strip_tags for the login
+            $firstname = strip_tags($firstnamePost);
+            $lastname = strip_tags($lastnamePost);
             $login = strip_tags($loginPost);
 
             // check valid email
             $email = filter_var($emailPost, FILTER_VALIDATE_EMAIL);
 
             // hash the password
-            $pass = password_hash($passPost, PASSWORD_BCRYPT);
+            $password = password_hash($passPost, PASSWORD_BCRYPT);
 
             // check if the user already exists
             if ($this->userExists($login, $email)) {
                 echo "User or Email already exists";
                 echo "<button onclick=\"location.href='/register'\">Go Back</button>";                exit();
             }
+
             //SQL part
             $q = $this->query(
-                "INSERT INTO users(login, email, password) 
-                    VALUES (:login, :email, :password)",
-                [":login" => $login,
+              "INSERT INTO users(firstname, lastname, nickname, email, password, admin) 
+              VALUES (:firstname, :lastname, :nickname, :email, :password, :admin)",
+                  [":firstname" => $firstname,
+                    ":lastname" => $lastname,
+                    ":nickname" => $login,
                     ":email" => $email,
-                    ":password" => $pass]);
+                    ":password" => $password, 
+                    ":admin" => 0]);
 
             if (!$q) {
                 die("form not sent to the db");
@@ -96,6 +102,7 @@ class User extends Database
 
         return $users;
     }
+
     public function userExists($nickname, $email)
     {
         $q = $this->query(
