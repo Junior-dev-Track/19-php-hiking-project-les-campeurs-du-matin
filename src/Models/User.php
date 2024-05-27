@@ -56,37 +56,44 @@ class User extends Database
   }
 
 
-  public function loginUser($loginPost, $passPost)
-  {
-      if (isset($loginPost, $passPost) && !empty($loginPost) && !empty($passPost)) {
+    public function loginUser($nicknamePost, $passwordPost)
+    {
+        if (isset($nicknamePost, $passwordPost) && !empty($nicknamePost) && !empty($passwordPost)) {
 
-        $login = strip_tags($loginPost);
+            $nickname = strip_tags($nicknamePost);
 
-        $q = $this->query(
-          "SELECT * FROM users WHERE login = :login",
-          [":login" => $login]
-        );
+            $q = $this->query(
+                "SELECT * FROM users WHERE nickname = :nickname",
+                [":nickname" => $nickname]
+            );
 
-        // execute return a boolean
-        if(!$q) {
-          die("User or Password not valid");
+            if (!$q) {
+                die("User or Password not valid");
+            }
+
+            $user = $q->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && !password_verify($passwordPost, $user['password'])) {
+                die("User or Password not valid");
+            };
+
+            $_SESSION['user'] = [
+                $user['id'],
+                $user['nickname'],
+                $user['email']
+            ];
+        }
+    }
+    public function getAllUsers()
+    {
+        $q = $this->query("SELECT * FROM users");
+
+        if (!$q) {
+            die("Failed to retrieve users");
         }
 
-        $user = $q->fetch(PDO::FETCH_ASSOC);
+        $users = $q->fetchAll(PDO::FETCH_ASSOC);
 
-        // check the password input with the password in db
-        if($user && !password_verify($passPost, $user['password'])) {
-            die("User or Password not valid");
-        };
-
-        // store data of user in $_SESSION
-        $_SESSION['user'] = [
-         $user['id'],
-         $user['login'],
-         $user['email']
-        ];
-
-      }
-  }
-
+        return $users;
+    }
 }

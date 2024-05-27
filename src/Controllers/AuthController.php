@@ -25,14 +25,13 @@ class AuthController
     include __DIR__ . '/../views/includes/footer.view.php';
   }
 
-  public function login($loginPost, $passPost)
-  {
-    $user = new User();
-    $user->loginUser($loginPost, $passPost);
+    public function login($nicknamePost, $passwordPost)
+    {
+        $user = new User();
+        $user->loginUser($nicknamePost, $passwordPost);
 
-    header("location: ./");
-
-  }
+        header("location: ./");
+    }
 
   public function showLoginForm()
   {

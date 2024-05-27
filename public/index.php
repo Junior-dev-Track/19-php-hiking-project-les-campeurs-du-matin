@@ -27,7 +27,14 @@ try {
 } catch (Exception $e) {
     echo "Error executing query: " . $e->getMessage();
 }
-
+try {
+$database = new Database();
+$stmt = $database->query("SELECT * FROM users");
+$users = $stmt->fetchAll();
+//var_dump($users);
+} catch (Exception $e) {
+    echo "Error executing query: " . $e->getMessage();
+}
 
 $router -> map('GET', '/', function() use ($hikes) {
     require __DIR__ . "/../src/views/includes/header.view.php";
