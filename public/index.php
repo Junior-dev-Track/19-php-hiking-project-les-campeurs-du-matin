@@ -63,7 +63,7 @@ $router -> map('GET', '/login', function() {
 
 $router -> map('POST', '/login', function() {
     $authController = new AuthController();
-    $authController->login($_POST['login'], $_POST['pass']);
+    $authController->login($_POST['nickname'], $_POST['password']);
 });
 
 $router -> map('GET', '/logout', function() {
