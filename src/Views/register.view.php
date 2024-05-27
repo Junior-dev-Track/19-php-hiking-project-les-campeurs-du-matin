@@ -1,6 +1,15 @@
-<form method="post" action="">
+<form method="post" action="/register">
         <div>
-            <label for="login">Login :</label>
+            <label for="firstname">First Name :</label>
+            <input type="text" name="firstname">
+        </div>
+        <div>
+            <label for="lastname">Last Name :</label>
+            <input type="text" name="lastname">
+        </div>
+
+        <div>
+            <label for="nickname">User name :</label>
             <input type="text" name="login">
         </div>
         <div>
@@ -8,8 +17,8 @@
             <input type="email" name="email">
         </div>
         <div>
-            <label for="pass">Password :</label>
-            <input type="text" name="pass">
+            <label for="password">Password :</label>
+            <input type="text" name="password">
         </div>
-        <button type="submit">Subscribe</button>
+        <button type="submit">Register</button>
 </form>

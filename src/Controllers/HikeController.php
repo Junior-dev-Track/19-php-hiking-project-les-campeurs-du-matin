@@ -26,6 +26,7 @@ class HikeController
     {
       try {
         $hike = (new Hike())->find($id);
+        $tags = (new Hike())->getTags($id);
 
         if(empty($hike)){
           throw new Exception('Hike not found');

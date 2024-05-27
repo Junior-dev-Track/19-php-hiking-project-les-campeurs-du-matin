@@ -9,10 +9,10 @@ use Models\User;
 class AuthController
 {
 
-  public function subscribe(string $loginPost, string $emailPost, string $passPost)
+  public function subscribe(string $firstnamePost, string $lastnamePost, string $loginPost, string $emailPost, string $passPost)
   {
       $user = new User();
-      $user->addUser($loginPost, $emailPost, $passPost);
+      $user->addUser($firstnamePost, $lastnamePost, $loginPost, $emailPost, $passPost);
 
       // redirect to index when done
       header("location: ./");

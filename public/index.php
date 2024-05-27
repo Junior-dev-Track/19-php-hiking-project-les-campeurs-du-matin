@@ -71,7 +71,7 @@ $router -> map('GET', '/register', function() {
 
 $router -> map('POST', '/register', function() {
     $authController = new AuthController();
-    $authController->subscribe($_POST['login'], $_POST['email'], $_POST['pass']);
+    $authController->subscribe($_POST['firstname'], $_POST['lastname'], $_POST['login'], $_POST['email'], $_POST['password']);
 });
 
 $router -> map('GET', '/404', function() {
