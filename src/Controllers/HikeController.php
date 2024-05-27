@@ -32,7 +32,7 @@ class HikeController
         }
 
         include __DIR__ . '/../views/includes/header.view.php';
-        include __DIR__ . '/../views/product.view.php';
+        include __DIR__ . '/../views/hike.view.php';
         include __DIR__ . '/../views/includes/footer.view.php';
 
       } catch(Exception $e) {

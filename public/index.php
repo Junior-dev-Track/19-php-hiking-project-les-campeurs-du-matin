@@ -30,11 +30,12 @@ try {
 
 
 $router -> map('GET', '/', function() use ($hikes) {
-
+    require __DIR__ . "/../src/views/includes/header.view.php";
     require __DIR__ . "/../src/views/index.view.php";
 });
 
 $router -> map('GET', '/home', function() use ($hikes) {
+    require __DIR__ . "/../src/views/includes/header.view.php";
     require __DIR__ . "/../src/views/index.view.php";
 });
 
