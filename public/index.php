@@ -10,7 +10,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Controllers\AuthController;
 use Controllers\HikeController;
 
-Use Models\Database;
+use Models\Database;
 
 
 session_start();
@@ -22,16 +22,17 @@ $router -> map('GET', '/', function() {
 
     require __DIR__ . "/../src/views/index.view.php";
 });
+
 $router -> map('GET', '/home', function() {
     require __DIR__ . "/../src/views/index.view.php";
 });
 
-$router -> map('GET', '/hike', function() {
+$router -> map('GET', '/hikes', function() {
     $hikeController = new HikeController();
     $hikeController->index();
 });
 
-$router -> map('GET', '/hike/[i:id]', function($id) {
+$router -> map('GET', '/hikes/[i:id]', function($id) {
     $hikeController = new HikeController();
     $hikeController->show($id);
 });
@@ -83,56 +84,3 @@ if ($match && is_callable($match['target'])) {
 }
 ?>
 
-
-
-
-
-
-
-
-
-<!--
-try {
-    $url_path = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), "/");
-    $method = $_SERVER['REQUEST_METHOD']; // GET -- POST
-
-    $url_base = "Classic_models_part2";
-
-    switch ($url_path) {
-      case "/":
-      case $url_base:
-          $productController = new ProductController();
-          $productController->index();
-          break;
-      case $url_base . "/product":
-            $productController = new ProductController();
-            $productController->show($_GET['productCode']);
-            break;
-      case $url_base . "/subscribe":
-        //instantiate Auth
-        $authController = new AuthController();
-        //if GET
-        if ($method == "GET") { $authController->showSubscriptionForm(); }
-        //if POST
-        if($method == "POST"){ $authController->subscribe($_POST["login"], $_POST["email"], $_POST["pass"]); }
-        break;
-      case $url_base . "/login":
-            $authController = new AuthController();
-            if ($method === "GET") $authController->showLoginForm();
-            if ($method === "POST") $authController->login($_POST['login'], $_POST['pass']);
-            break;
-        case $url_base . "/logout":
-            $authController = new AuthController();
-            $authController->logout();
-            break;
-      default:
-        $pageController = new PageController();
-        $pageController->page_404();
-    }
-}
-catch (Exception $e) {
-    //echo $e->getMessage();
-    $pageController = new PageController();
-    $pageController->page_500($e->getMessage());
-}
--->

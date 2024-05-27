@@ -10,6 +10,7 @@ class HikeController
 {
     public  function index()
     {
+      echo "index method is called";
       try {
         $hikes = (new Hike())->findAll(20);
 
