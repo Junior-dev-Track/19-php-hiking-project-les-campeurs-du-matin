@@ -18,12 +18,23 @@ session_start();
 $router = new AltoRouter();
 
 
-$router -> map('GET', '/', function() {
+
+
+try {
+    $database = new Database();
+    $stmt = $database->query("SELECT * FROM hikes");
+    $hikes = $stmt->fetchAll();
+} catch (Exception $e) {
+    echo "Error executing query: " . $e->getMessage();
+}
+
+
+$router -> map('GET', '/', function() use ($hikes) {
 
     require __DIR__ . "/../src/views/index.view.php";
 });
 
-$router -> map('GET', '/home', function() {
+$router -> map('GET', '/home', function() use ($hikes) {
     require __DIR__ . "/../src/views/index.view.php";
 });
 

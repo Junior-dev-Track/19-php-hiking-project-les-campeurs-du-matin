@@ -5,7 +5,7 @@
         <?php foreach($hikes as $hike): ?>
             
             <li>
-                <a href="hike?id=<?= $hike['id'] ?>">
+                <a href="hikes?id=<?= $hike['id'] ?>">
                     <?= $hike['name'] ?>
                 </a>
             </li>
