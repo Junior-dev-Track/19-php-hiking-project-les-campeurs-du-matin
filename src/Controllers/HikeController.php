@@ -8,6 +8,34 @@ use Models\Hike;
 
 class HikeController
 {
+    protected Hike $hikeModel;
+    public function __construct()
+    {
+        $this->hikeModel = new Hike();
+    }
+    public function addHike($name, $description, $distance, $duration, $elevation_gain, $created_at, $updated_at, $user_id): void
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $distance = $_POST['distance'];
+            $duration = $_POST['duration'];
+            $elevation_gain = $_POST['elevation_gain'];
+            $created_at = date('Y-m-d H:i:s'); // current date and time
+            $updated_at = date('Y-m-d H:i:s'); // current date and time
+
+            try {
+                $this->hikeModel->addHike($name, $description, $distance, $duration, $elevation_gain, $created_at, $updated_at, $user_id);
+
+                header('Location: /hikes');
+
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
+        }
+
+    }
+
     public  function index()
     {
       try {

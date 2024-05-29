@@ -11,4 +11,5 @@
             </li>
         <?php endforeach; ?>
     </ul>
+    <a href="/hike/newHike" class="add-hike-button">Add New Hike</a>
 <?php endif; ?>

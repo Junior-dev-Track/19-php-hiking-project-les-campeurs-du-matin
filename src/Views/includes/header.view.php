@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,12 @@
     <title>Les campeurs du matin</title>
     <!--<link rel="stylesheet" href="./assets/style.css">-->
 </head>
+<?php
+
+$user_id = isset($_SESSION['user']['sess_id']) ? $_SESSION['user']['sess_id'] : null;
+var_dump($user_id);
+
+?>
 <body>
 
 
@@ -15,10 +22,10 @@
         <ul>
             <li class="home"><a href="/">Home</a></li>
             <?php if(!isset($_SESSION["user"])): ?>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/register">Register</a></li>
             <?php else: ?>
-            <li><a href="/logout">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             <?php endif; ?>
         </ul>
     </nav>

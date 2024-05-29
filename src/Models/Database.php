@@ -11,7 +11,7 @@ use Exception;
 class Database
 {
 
-  private PDO $pdo;
+  protected PDO $pdo;
 
   public function __construct()
   {

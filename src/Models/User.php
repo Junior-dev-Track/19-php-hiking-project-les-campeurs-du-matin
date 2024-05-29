@@ -7,11 +7,18 @@ use Exception;
 
 class User extends Database
 {
+    private $database;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->database = $this->pdo;
+    }
     public function addUser($firstnamePost, $lastnamePost, $loginPost, $emailPost, $passPost)
     {
 
-      if(isset($firstnamePost, $lastnamePost, $loginPost, $emailPost, $passPost) &&
-        !empty($firstnamePost) && !empty($lastnamePost) && !empty($loginPost) && !empty($emailPost) && !empty($passPost)
+        if(isset($firstnamePost, $lastnamePost, $loginPost, $emailPost, $passPost) &&
+            !empty($firstnamePost) && !empty($lastnamePost) && !empty($loginPost) && !empty($emailPost) && !empty($passPost)
         ) {
 
             // strip_tags for the login
@@ -33,13 +40,13 @@ class User extends Database
 
             //SQL part
             $q = $this->query(
-              "INSERT INTO users(firstname, lastname, nickname, email, password, admin) 
+                "INSERT INTO users(firstname, lastname, nickname, email, password, admin) 
               VALUES (:firstname, :lastname, :nickname, :email, :password, :admin)",
-                  [":firstname" => $firstname,
+                [":firstname" => $firstname,
                     ":lastname" => $lastname,
                     ":nickname" => $login,
                     ":email" => $email,
-                    ":password" => $password, 
+                    ":password" => $password,
                     ":admin" => 0]);
 
             if (!$q) {
@@ -61,33 +68,31 @@ class User extends Database
         }
     }
 
-
     public function loginUser($nicknamePost, $passwordPost)
     {
         if (isset($nicknamePost, $passwordPost) && !empty($nicknamePost) && !empty($passwordPost)) {
-
             $nickname = strip_tags($nicknamePost);
 
-            $q = $this->query(
-                "SELECT * FROM users WHERE nickname = :nickname",
-                [":nickname" => $nickname]
-            );
+            // Query the database for the user with the provided nickname
+            $stmt = $this->database->prepare("SELECT * FROM users WHERE nickname = ?");
+            $stmt->execute([$nickname]);
+            $user = $stmt->fetch();
 
-            if (!$q) {
-                die("User or Password not valid");
+            // Check if a user was found and the provided password is correct
+            if ($user && password_verify($passwordPost, $user['password'])) {
+                // Store user data in session
+                $_SESSION['user'] = [
+                    'sess_id' => $user['id'],
+                    'nickname' => $user['nickname'],
+                    'email' => $user['email']
+                ];
+                return $user['id'];
+            } else {
+                // If the user was not found or the password is incorrect, return false
+                return false;
             }
-
-            $user = $q->fetch(PDO::FETCH_ASSOC);
-
-            if ($user && !password_verify($passwordPost, $user['password'])) {
-                die("User or Password not valid");
-            };
-
-            $_SESSION['user'] = [
-                $user['id'],
-                $user['nickname'],
-                $user['email']
-            ];
+        } else {
+            throw new Exception("Nickname and password must be provided");
         }
     }
     public function getAllUsers()
