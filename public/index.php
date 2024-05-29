@@ -119,11 +119,13 @@ $router -> map('POST', '/hike/addHike/[i:id]', function($id) {
     $created_at = isset($_POST['created_at']) ? $_POST['created_at'] : date('Y-m-d H:i:s');
     $updated_at = isset($_POST['updated_at']) ? $_POST['updated_at'] : date('Y-m-d H:i:s');
 
-    // $user_id = $_SESSION['user_id'];
-    //$hikeController->addHike($user_id, $_POST['name'], $_POST['description'], $_POST['distance'], $_POST['duration'], $_POST['elevation_gain'], $created_at, $updated_at);
     $hikeController->addHike($_POST['name'], $_POST['description'], $_POST['distance'], $_POST['duration'], $_POST['elevation_gain'], $created_at, $updated_at, $id);
-    var_dump($_POST);
-    var_dump($created_at, $updated_at);
+});
+
+$router -> map('POST', '/hike/deleteHike/[i:id]', function($id) {
+    $hikeController = new HikeController();
+    $hikeController->deleteHike($id);
+    header('Location: /hikes');
 });
 
 

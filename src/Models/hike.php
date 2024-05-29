@@ -82,5 +82,26 @@ class Hike extends Database
         }
     }
 
+    public function deleteHike($id): bool
+    {
+        try {
+            $stmt = $this->query(
+                "DELETE FROM hikes WHERE id = ?",
+                [$id]
+            );
 
+            if ($stmt->rowCount() > 0) {
+                error_log("Successfully deleted hike with id: " . $id); // Log successful deletion
+                return true;
+            } else {
+                throw new \Exception("No rows were affected, hike was not deleted from the database");
+            }
+        } catch (\PDOException $e) {
+            error_log("Database error deleting hike: " . $e->getMessage()); // Log any database errors
+            throw new \Exception("Database error: " . $e->getMessage());
+        } catch (\Exception $e) {
+            error_log("General error deleting hike: " . $e->getMessage()); // Log any general errors
+            throw new \Exception("General error: " . $e->getMessage());
+        }
+    }
 }

@@ -38,35 +38,50 @@ class HikeController
 
     public  function index()
     {
-      try {
-        $hikes = (new Hike())->findAll(20);
+        try {
+            $hikes = (new Hike())->findAll(20);
 
-        include __DIR__ . '/../views/includes/header.view.php';
-        include __DIR__ . '/../views/index.view.php';
-        include __DIR__ . '/../views/includes/footer.view.php';
+            include __DIR__ . '/../views/includes/header.view.php';
+            include __DIR__ . '/../views/index.view.php';
+            include __DIR__ . '/../views/includes/footer.view.php';
 
-      } catch (Exception $e) {
-        echo $e->getMessage();
-      }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
     public function show(string $id)
     {
-      try {
-        $hike = (new Hike())->find($id);
-        $tags = (new Hike())->getTags($id);
+        try {
+            $hike = (new Hike())->find($id);
+            $tags = (new Hike())->getTags($id);
 
-        if(empty($hike)){
-          throw new Exception('Hike not found');
+            if(empty($hike)){
+                throw new Exception('Hike not found');
+            }
+
+            include __DIR__ . '/../views/includes/header.view.php';
+            include __DIR__ . '/../views/hike.view.php';
+            include __DIR__ . '/../views/includes/footer.view.php';
+
+        } catch(Exception $e) {
+            echo $e->getMessage();
         }
+    }
 
-        include __DIR__ . '/../views/includes/header.view.php';
-        include __DIR__ . '/../views/hike.view.php';
-        include __DIR__ . '/../views/includes/footer.view.php';
+    public function deleteHike($id): void
+    {
 
-      } catch(Exception $e) {
-        echo $e->getMessage();
-      }
+        try {
+            error_log("Attempting to delete hike with id: " . $id); // Log the id of the hike being deleted
+            $this->hikeModel->deleteHike($id);
+            header('Location: /hikes');
+            // Redirect to the list of hikes
+            exit();
+
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 
 

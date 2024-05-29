@@ -9,7 +9,11 @@
 
 <p>Tags:</p>
 <ul>
-<?php foreach ($tags as $tag): ?>
-    <li><?= $tag['name'] ?></li>
-<?php endforeach; ?>
+    <?php foreach ($tags as $tag): ?>
+        <li><?= $tag['name'] ?></li>
+    <?php endforeach; ?>
 </ul>
+<form method="POST" action="/hike/deleteHike/<?php echo $hike['id']; ?>" onsubmit="return confirm('Are you sure you want to delete this hike?');">
+    <input type="hidden" name="id" value="<?php echo $hike['id']; ?>">
+    <button type="submit">Delete Hike</button>
+</form>
