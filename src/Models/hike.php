@@ -104,4 +104,31 @@ class Hike extends Database
             throw new \Exception("General error: " . $e->getMessage());
         }
     }
+    public function updateHike($id, $name, $description, $distance, $duration, $elevation_gain, $updated_at): bool
+    {
+        try {
+            $stmt = $this->query(
+                "UPDATE hikes SET name = :name, description = :description, distance = :distance, duration = :duration, elevation_gain = :elevation_gain, updated_at = :updated_at WHERE id = :id",
+                [
+                    ":id" => $id,
+                    ":name" => $name,
+                    ":description" => $description,
+                    ":distance" => $distance,
+                    ":duration" => $duration,
+                    ":elevation_gain" => $elevation_gain,
+                    ":updated_at" => $updated_at
+                ]
+            );
+
+            if ($stmt->rowCount() > 0) {
+                return true;
+            } else {
+                throw new \Exception("No rows were affected, hike was not updated in the database");
+            }
+        } catch (\PDOException $e) {
+            throw new \Exception("Database error: " . $e->getMessage());
+        } catch (\Exception $e) {
+            throw new \Exception("General error: " . $e->getMessage());
+        }
+    }
 }

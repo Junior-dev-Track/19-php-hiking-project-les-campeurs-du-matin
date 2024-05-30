@@ -17,3 +17,6 @@
     <input type="hidden" name="id" value="<?php echo $hike['id']; ?>">
     <button type="submit">Delete Hike</button>
 </form>
+<form method="GET" action="/hike/updateHike/<?php echo $hike['id']; ?>">
+    <button type="submit">Edit Hike</button>
+</form>

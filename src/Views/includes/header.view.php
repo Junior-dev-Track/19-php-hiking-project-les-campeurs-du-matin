@@ -11,7 +11,7 @@
 <?php
 
 $user_id = isset($_SESSION['user']['sess_id']) ? $_SESSION['user']['sess_id'] : null;
-var_dump($user_id);
+
 
 ?>
 <body>

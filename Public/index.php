@@ -128,6 +128,15 @@ $router -> map('POST', '/hike/deleteHike/[i:id]', function($id) {
     header('Location: /hikes');
 });
 
+$router -> map('GET', '/hike/updateHike/[i:id]', function($id) {
+    $hikeController = new HikeController();
+    $hikeController->edit($id);
+});
+
+$router -> map('POST', '/hike/updateHike/[i:id]', function($id) {
+    $hikeController = new HikeController();
+    $hikeController->update($id, $_POST['name'], $_POST['description'], $_POST['distance'], $_POST['duration'], $_POST['elevation_gain'], date('Y-m-d H:i:s'));
+});
 
 // match current request
 $match = $router->match();

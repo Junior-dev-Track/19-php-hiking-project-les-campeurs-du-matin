@@ -83,6 +83,19 @@ class HikeController
             echo $e->getMessage();
         }
     }
+    public function edit($id) {
+        $hike = $this->hikeModel->find($id);
 
+        require __DIR__ . "/../views/editeHike.view.php";
+    }
+
+    public function update($id, $name, $description, $distance, $duration, $elevation_gain, $updated_at): void
+    {
+        // Update the hike data
+        $this->hikeModel->updateHike($id, $name, $description, $distance, $duration, $elevation_gain, $updated_at);
+
+        // Redirect to the hike details page
+        header('Location: /hikes/' . $id);
+    }
 
 }
